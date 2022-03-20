@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace Tetris
 {
-    public class Square
+    public class Square : Figure
     {
-        Point[] points = new Point[4];
-
         public Square(int x, int y, char sym)
         {
             points[0] = new Point(x, y, sym);
@@ -18,14 +16,6 @@ namespace Tetris
             points[3] = new Point(x + 1, y + 1, sym);
 
             Draw();
-        }
-
-        public void Draw()
-        {
-            foreach(Point p in points)
-            {
-                p.Draw();
-            }
         }
     }
 }
