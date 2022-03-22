@@ -24,5 +24,27 @@ namespace Tetris
             Console.SetCursorPosition(x, y);
             Console.Write(c);
         }
+
+        internal void Move(Direction dir)
+        {
+            switch(dir)
+            {
+                case Direction.DOWN:
+                    y++;
+                    break;
+                case Direction.LEFT:
+                    x--;
+                    break;
+                case Direction.RIGHT:
+                    x++;
+                    break;
+            }
+        }
+
+        public void hide()
+        {
+            Console.SetCursorPosition(x, y);
+            Console.Write(" ");
+        }
     }
 }

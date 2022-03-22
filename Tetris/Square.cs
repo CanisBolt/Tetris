@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Tetris
 {
-    public class Square : Figure
+    class Square : Figure
     {
         public Square(int x, int y, char sym)
         {
@@ -16,6 +16,11 @@ namespace Tetris
             points[3] = new Point(x + 1, y + 1, sym);
 
             Draw();
+        }
+
+        public override void Rotate()
+        {
+
         }
     }
 }

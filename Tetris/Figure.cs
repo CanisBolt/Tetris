@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Tetris
 {
-    public class Figure
+    abstract class Figure
     {
         protected Point[] points = new Point[4];
 
@@ -17,5 +17,23 @@ namespace Tetris
                 p.Draw();
             }
         }
+
+        public void Move(Direction dir)
+        {
+            foreach(Point p in points)
+            {
+                p.Move(dir);
+            }
+        }
+
+        public void Hide()
+        {
+            foreach(Point p in points)
+            {
+                p.hide();
+            }
+        }
+
+        public abstract void Rotate();
     }
 }
