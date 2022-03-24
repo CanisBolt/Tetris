@@ -20,7 +20,7 @@ namespace Tetris
 
         public override void Rotate(Point[] plist)
         {
-            if(plist[0].x == plist[1].x)
+            if(plist[0].X == plist[1].X)
             {
                 RotateHorizontal(plist);
             }
@@ -34,8 +34,8 @@ namespace Tetris
         {
             for(int i = 0; i < plist.Length; i++)
             {
-                plist[i].x = plist[0].x;
-                plist[i].y = plist[0].y + i;
+                plist[i].X = plist[0].X;
+                plist[i].Y = plist[0].Y + i;
             }
         }
 
@@ -43,8 +43,8 @@ namespace Tetris
         {
             for (int i = 0; i < plist.Length; i++)
             {
-                plist[i].y = plist[0].y;
-                plist[i].x = plist[0].x + i;
+                plist[i].Y = plist[0].Y;
+                plist[i].X = plist[0].X + i;
             }
         }
     }
