@@ -18,18 +18,9 @@ namespace Tetris
             }
         }
 
-        //public void Move(Direction dir)
-        //{
-        //    Hide();
-        //    foreach(Point p in points)
-        //    {
-        //        p.Move(dir);
-        //    }
-        //    Draw();
-        //}
-        public void Move(Point[] Plist, Direction dir)
+        public void Move(Point[] plist, Direction dir)
         {
-            foreach (Point p in Plist)
+            foreach (Point p in plist)
             {
                 p.Move(dir);
             }
@@ -47,11 +38,23 @@ namespace Tetris
             Draw();
         }
 
-        private bool VerifyPosition(Point[] Plist)
+        public void TryRotate()
         {
-            foreach(Point p in Plist)
+            Hide();
+            var clone = Clone();
+            Rotate(clone);
+
+            if(VerifyPosition(clone))
+                points = clone;
+
+            Draw();
+        }
+
+        private bool VerifyPosition(Point[] plist)
+        {
+            foreach(Point p in plist)
             {
-                if(p.x < 0 || p.y < 0 || p.x >= 40 || p.y >= 30)
+                if(p.x < 0 || p.y < 0 || p.x >= Field.WIDTH || p.y >= Field.HEIGHT)
                 {
                     return false;
                 }
@@ -73,11 +76,11 @@ namespace Tetris
         {
             foreach(Point p in points)
             {
-                p.hide();
+                p.Hide();
             }
         }
 
-        public abstract void Rotate();
+        public abstract void Rotate(Point[] plist);
 
     }
 }

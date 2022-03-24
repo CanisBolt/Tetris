@@ -33,6 +33,8 @@ namespace Tetris
             Console.SetCursorPosition(0, 0);
         }
 
+        
+
         internal void Move(Direction dir)
         {
             switch(dir)
@@ -49,7 +51,7 @@ namespace Tetris
             }
         }
 
-        public void hide()
+        public void Hide()
         {
             Console.SetCursorPosition(x, y);
             Console.Write(" ");
