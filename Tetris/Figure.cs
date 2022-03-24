@@ -8,11 +8,11 @@ namespace Tetris
 {
     abstract class Figure
     {
-        protected Point[] points = new Point[4];
+        public Point[] Points = new Point[4];
 
         public void Draw()
         {
-            foreach (Point p in points)
+            foreach (Point p in Points)
             {
                 p.Draw();
             }
@@ -26,55 +26,63 @@ namespace Tetris
             }
         }
 
-        public void TryMove(Direction dir)
+        public Result TryMove(Direction dir)
         {
             Hide();
             var clone = Clone();
             Move(clone, dir);
 
-            if(VerifyPosition(clone))
-                points = clone;
+            var result = VerifyPosition(clone);
+            if (result == Result.SUCCESS)
+                Points = clone;
 
             Draw();
+
+            return result;
         }
 
-        public void TryRotate()
+        public Result TryRotate()
         {
             Hide();
             var clone = Clone();
             Rotate(clone);
 
-            if(VerifyPosition(clone))
-                points = clone;
+            var result = VerifyPosition(clone);
+            if (result == Result.SUCCESS)
+                Points = clone;
 
             Draw();
+
+            return result;
         }
 
-        private bool VerifyPosition(Point[] plist)
+        private Result VerifyPosition(Point[] plist)
         {
             foreach(Point p in plist)
             {
-                if(p.X < 0 || p.Y < 0 || p.X >= Field.Width || p.Y >= Field.Height)
-                {
-                    return false;
-                }
+                if (p.Y >= Field.Height)
+                    return Result.DOWN_BORDER_STRIKE;
+                if (p.X >= Field.Width || p.X < 0 || p.Y < 0)
+                    return Result.BORDER_STRIKE;
+                if (Field.CheckStrike(p))
+                    return Result.HEAP_STRIKE;
             }
-            return true;
+            return Result.SUCCESS;
         }
 
         private Point[] Clone()
         {
-            var newPoints = new Point[points.Length];
-            for (int i = 0; i < points.Length; i++)
+            var newPoints = new Point[Points.Length];
+            for (int i = 0; i < Points.Length; i++)
             {
-                newPoints[i] = new Point(points[i]);
+                newPoints[i] = new Point(Points[i]);
             }
             return newPoints;
         }
 
         public void Hide()
         {
-            foreach(Point p in points)
+            foreach(Point p in Points)
             {
                 p.Hide();
             }
