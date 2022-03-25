@@ -33,8 +33,6 @@ namespace Tetris
             Console.SetCursorPosition(0, 0);
         }
 
-        
-
         internal void Move(Direction dir)
         {
             switch(dir)
@@ -47,6 +45,9 @@ namespace Tetris
                     break;
                 case Direction.RIGHT:
                     X++;
+                    break;
+                case Direction.UP:
+                    Y--;
                     break;
             }
         }

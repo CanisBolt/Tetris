@@ -43,7 +43,7 @@ namespace Tetris
         {
             _heap = new bool[Height][];
 
-            for(int i = 0; i < Height; i++)
+            for (int i = 0; i < Height; i++)
             {
                 _heap[i] = new bool[Width];
             }
@@ -51,7 +51,7 @@ namespace Tetris
 
         public static void TryDeleteLines()
         {
-            for(int j = 0; j < Height; j++)
+            for (int j = 0; j < Height; j++)
             {
                 int counter = 0;
 
@@ -70,9 +70,9 @@ namespace Tetris
 
         private static void DeleteLines(int line)
         {
-            for(int j = line; j >= 0; j--)
+            for (int j = line; j >= 0; j--)
             {
-                for(int i =0; i < Width; i++)
+                for (int i = 0; i < Width; i++)
                 {
                     if (j == 0)
                         _heap[j][i] = false;

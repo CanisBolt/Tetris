@@ -18,9 +18,9 @@ namespace Tetris
             }
         }
 
-        public void Move(Point[] plist, Direction dir)
+        public void Move(Direction dir)
         {
-            foreach (Point p in plist)
+            foreach (Point p in Points)
             {
                 p.Move(dir);
             }
@@ -29,12 +29,12 @@ namespace Tetris
         public Result TryMove(Direction dir)
         {
             Hide();
-            var clone = Clone();
-            Move(clone, dir);
 
-            var result = VerifyPosition(clone);
-            if (result == Result.SUCCESS)
-                Points = clone;
+            Move(dir);
+
+            var result = VerifyPosition();
+            if (result != Result.SUCCESS)
+                Move(Reverse(dir));
 
             Draw();
 
@@ -44,21 +44,36 @@ namespace Tetris
         public Result TryRotate()
         {
             Hide();
-            var clone = Clone();
-            Rotate(clone);
+            Rotate();
 
-            var result = VerifyPosition(clone);
-            if (result == Result.SUCCESS)
-                Points = clone;
+            var result = VerifyPosition();
+            if (result != Result.SUCCESS)
+                Rotate();
 
             Draw();
 
             return result;
         }
 
-        private Result VerifyPosition(Point[] plist)
+        private Direction Reverse(Direction dir)
         {
-            foreach(Point p in plist)
+            switch(dir)
+            {
+                case Direction.LEFT:
+                    return Direction.RIGHT;
+                case Direction.RIGHT:
+                    return Direction.LEFT;
+                case Direction.UP:
+                    return Direction.DOWN;
+                case Direction.DOWN:
+                    return Direction.UP;
+            }
+            return dir;
+        }
+
+        private Result VerifyPosition()
+        {
+            foreach(Point p in Points)
             {
                 if (p.Y >= Field.Height)
                     return Result.DOWN_BORDER_STRIKE;
@@ -70,16 +85,6 @@ namespace Tetris
             return Result.SUCCESS;
         }
 
-        private Point[] Clone()
-        {
-            var newPoints = new Point[Points.Length];
-            for (int i = 0; i < Points.Length; i++)
-            {
-                newPoints[i] = new Point(Points[i]);
-            }
-            return newPoints;
-        }
-
         public void Hide()
         {
             foreach(Point p in Points)
@@ -88,7 +93,12 @@ namespace Tetris
             }
         }
 
-        public abstract void Rotate(Point[] plist);
+        internal bool IsOnTop()
+        {
+            return Points[0].Y == 0;
+        }
+
+        public abstract void Rotate();
 
     }
 }
