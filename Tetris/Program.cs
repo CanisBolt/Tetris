@@ -19,10 +19,9 @@ namespace Tetris
 
         static void Main(string[] args)
         {
-            Console.SetWindowSize(Field.Width, Field.Height);
-            Console.SetBufferSize(Field.Width, Field.Height);
+            DrawerProvider.Drawer.InitField();
 
-            generator = new FigureGenerator(Field.Width / 2, 0, Drawer.DEFAULT_SYMBOL);
+            generator = new FigureGenerator(Field.Width / 2, 0);
             currentFigure = generator.GetNewFigure();
             SetTimer();
 
@@ -81,7 +80,7 @@ namespace Tetris
         private static void WriteGameOver()
         {
             Console.SetCursorPosition(Field.Width / 2 - 8, Field.Height / 2);
-            Console.WriteLine("G A M E     O V E R");
+            Console.WriteLine("G A M E    O V E R");
         }
 
         private static Result HandleKey(Figure currentFigure, ConsoleKeyInfo key)
